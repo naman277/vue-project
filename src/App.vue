@@ -1,32 +1,30 @@
-<script>
-  import { ref } from 'vue';
+<script setup>
+import { ref } from 'vue';
 
-  export default{
-    setup(){
-      const name = ref('John Doe');
-      const status = ref('Active');
-      const tasks = ref(['Task 1', 'Task 2', 'Task 3']);
+const name = ref('John Doe');
+const status = ref('Active');
+const tasks = ref(['Task 1', 'Task 2', 'Task 3']);
+const newTask = ref('naman'); //write something in the input field and it will be stored in newTask variable and displayed in the input field of the form by default
 
-      const toggleStatus = () => {
-        if(status.value === "Active"){
-          status.value = "Pending";
-        }
-        else if(status.value === "Pending"){
-          status.value = "Inactive";
-        }
-        else{
-          status.value = "Active";
-        }
-      }
+const toggleStatus = () => {
+  if(status.value === "Active"){
+    status.value = "Pending";
+  }
+  else if(status.value === "Pending"){
+    status.value = "Inactive";
+  }
+  else{
+    status.value = "Active";
+  }
+}
 
-      return {
-        name,
-        status,
-        tasks,
-        toggleStatus,
-      };
-    },
-  };
+const addTask = ()=>{
+  if(newTask.value.trim() !== ''){
+    tasks.value.push(newTask.value);
+    newTask.value = '';
+  }
+};
+
 </script>
 
 <template>
@@ -35,6 +33,13 @@
   <p v-if="status === 'Active'"> User is Active </p>
   <p v-else-if="status === 'Pending'"> User is Pending </p>
   <p v-else> User is Not Active </p>
+
+  <form @submit.prevent="addTask"> <!-- .prevent is used to prevent the default form submission behavior. It saves us from writing event.preventDefault() inside the function handler -->
+    <label for="newTask">Add Task: </label>
+    <input type="text" id="newTask" name="newTask" v-model="newTask" />
+    <br>
+    <button type="submit">Submit</button>
+  </form>
 
   <h3>Tasks</h3>
   <ul>
