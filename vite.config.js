@@ -14,7 +14,7 @@ export default defineConfig({
     
     proxy:{
       '/api' : {
-        target: "http://localhost:5000",
+        target: "https://69d4dad7d396bd74235dc85b.mockapi.io/api/jobs",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
