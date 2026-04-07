@@ -31,7 +31,7 @@ const deleteJob = async () => {
 
 onMounted(async () => {
     try{
-        const response = await axios.get(`/api/jobs/${jobId}`);
+        const response = await axios.get(`https://69d4dad7d396bd74235dc85b.mockapi.io/api/jobs/${jobId}`);
         state.job = response.data;
     }catch(e){
         console.log("Error fetching job: ",e);

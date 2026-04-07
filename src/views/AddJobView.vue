@@ -35,7 +35,7 @@ const handleSubmit = async () => {
         },
     };
     try{
-        const response = await axios.post(`/api/jobs/`, newJob);
+        const response = await axios.post(`https://69d4dad7d396bd74235dc85b.mockapi.io/api/jobs/`, newJob);
         toast.success('Job Added Successfully')
         router.push(`/jobs/${response.data.id}`)
     }catch(e){
