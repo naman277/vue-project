@@ -12,13 +12,13 @@ export default defineConfig({
   ],
   server: {
     
-    proxy:{
-      '/api' : {
-        target: "https://69d4dad7d396bd74235dc85b.mockapi.io",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
+    // proxy:{
+    //   '/api' : {
+    //     target: "https://69d4dad7d396bd74235dc85b.mockapi.io",
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, '')
+    //   }
+    // }
   },
   resolve: {
     alias: {

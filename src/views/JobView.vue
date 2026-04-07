@@ -19,7 +19,7 @@ const deleteJob = async () => {
     try {
         const confirm = window.confirm('Are you sure you want to delete this job?');
         if(confirm){
-            await axios.delete(`/api/jobs/${jobId}`)
+            await axios.delete(`https://69d4dad7d396bd74235dc85b.mockapi.io/api/jobs/${jobId}`)
             toast.success('Job deleted successfully')
             router.push('/jobs')
         }

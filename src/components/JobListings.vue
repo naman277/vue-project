@@ -19,7 +19,7 @@ defineProps({
 
 onMounted(async () => {
     try{
-        const response = await axios.get('/api/jobs');
+        const response = await axios.get('https://69d4dad7d396bd74235dc85b.mockapi.io/api/jobs');
         state.jobs = response.data;
     }catch(e){
         console.log("Error fetching jobs: ",e);
