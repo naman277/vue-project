@@ -5,6 +5,7 @@ import { useRoute,useRouter, RouterLink } from "vue-router";
 import { useToast } from "vue-toastification";
 import axios from "axios";
 import BackButton from "@/components/BackButton.vue";
+import NotFoundView from "./NotFoundView.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -13,6 +14,7 @@ const jobId = route.params.id;
 const state = reactive({
     job: {},
     isLoading: true,
+    notFound: false,
 });
 
 const deleteJob = async () => {
@@ -32,9 +34,15 @@ const deleteJob = async () => {
 onMounted(async () => {
     try{
         const response = await axios.get(`https://69d4dad7d396bd74235dc85b.mockapi.io/api/jobs/${jobId}`);
+        if (!response.data || !response.data.id) {
+            state.notFound = true;
+            return;
+        }
         state.job = response.data;
+
     }catch(e){
         console.log("Error fetching job: ",e);
+        state.notFound = true;
     }
     finally{
         state.isLoading = false;
@@ -45,7 +53,9 @@ onMounted(async () => {
 
 <template>
     <BackButton />
-    <section v-if="!state.isLoading" class="bg-green-50">
+    <NotFoundView v-if="state.notFound" prevPage="jobs" />
+    <div v-else-if="state.isLoading" class="text-center text-gray-500 py-6"><PulseLoader /></div>
+    <section v-else class="bg-green-50">
     <div class="container m-auto py-10 px-6">
         <div class="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
         <main>
@@ -122,5 +132,5 @@ onMounted(async () => {
         </div>
     </div>
     </section>
-    <div v-else class="text-center text-gray-500 py-6"><PulseLoader /></div>
+
 </template>
