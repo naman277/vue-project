@@ -53,7 +53,7 @@ onMounted(async () => {
 
 <template>
     <BackButton />
-    <NotFoundView v-if="state.notFound" prevPage="jobs" />
+    <NotFoundView v-if="state.notFound" prevPage="jobs" material="job" Button="View Jobs" />
     <div v-else-if="state.isLoading" class="text-center text-gray-500 py-6"><PulseLoader /></div>
     <section v-else class="bg-green-50">
     <div class="container m-auto py-10 px-6">
