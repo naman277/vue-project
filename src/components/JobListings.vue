@@ -1,59 +1,66 @@
 <script setup>
-import { reactive, defineProps, onMounted } from 'vue';
-import JobListing from './JobListing.vue';
-import { RouterLink } from 'vue-router';
-import { PulseLoader } from "vue-spinner"
-import axios from 'axios';
+import { reactive, defineProps, onMounted } from "vue";
+import JobListing from "./JobListing.vue";
+import { RouterLink } from "vue-router";
+import { PulseLoader } from "vue-spinner";
+import axios from "axios";
 
 const state = reactive({
-    jobs: [],
-    isLoading: true,
-})
+  jobs: [],
+  isLoading: true,
+});
 defineProps({
-    limit: Number,
-    showButton: {
-        type: Boolean,
-        default: false
-    }
-})
+  limit: Number,
+  showButton: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 onMounted(async () => {
-    try{
-        const response = await axios.get('https://69d4dad7d396bd74235dc85b.mockapi.io/api/jobs');
-        state.jobs = response.data;
-    }catch(e){
-        console.log("Error fetching jobs: ",e);
-    }
-    finally{
-        state.isLoading = false;
-    }
-})
-
+  try {
+    const response = await axios.get(
+      "https://69d4dad7d396bd74235dc85b.mockapi.io/api/jobs",
+    );
+    state.jobs = response.data;
+  } catch (e) {
+    console.log("Error fetching jobs: ", e);
+  } finally {
+    state.isLoading = false;
+  }
+});
 </script>
 
 <template>
-    <section class="bg-blue-50 px-4 py-10">
-        <div class="container-cl lg:container m-auto">
-            <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
-                Browse Jobs
-            </h2>
-            <!-- Show loading spinner while loading is true -->
-            <div v-if="state.isLoading" class="text-center text-gray-500 py-6"><PulseLoader /></div>
+  <section class="bg-blue-50 px-4 py-10">
+    <div class="container-cl lg:container m-auto">
+      <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
+        Browse Jobs
+      </h2>
+      <!-- Show loading spinner while loading is true -->
+      <div v-if="state.isLoading" class="loader-parent">
+        <div class="loader"></div>
+      </div>
 
-            <!-- Show job listing when data has been loaded -->
+      <!-- Show job listing when data has been loaded -->
 
-            <div v-else><div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <JobListing v-for="job in state.jobs.slice(0,limit || state.jobs.length)" :key="job.id" :job="job" />
-            </div></div>
+      <div v-else>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <JobListing
+            v-for="job in state.jobs.slice(0, limit || state.jobs.length)"
+            :key="job.id"
+            :job="job"
+          />
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section v-if="showButton" class="m-auto max-w-lg my-10 px-6">
-        <RouterLink
-            to="/jobs"
-            class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
-            >View All Jobs</RouterLink
-        >
-    </section>
-    
+  <section v-if="showButton" class="m-auto max-w-lg my-10 px-6">
+    <RouterLink
+      to="/jobs"
+      class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
+      >View All Jobs</RouterLink
+    >
+  </section>
 </template>
